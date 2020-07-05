@@ -22,7 +22,7 @@ class LocalRecordsWidget(TimesWidgetView):
 		self.id = 'pyplanet__widgets_localrecords'
 
 		self.action = self.action_recordlist
-		self.record_amount = 15
+		self.record_amount = 13
 
 	async def get_player_data(self):
 		data = await super().get_player_data()
