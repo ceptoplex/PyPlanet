@@ -55,7 +55,7 @@ class UIProperties:  # pragma: no cover
 		Reset the UI Properties to the default ManiaPlanet ones.
 		:return:
 		"""
-		if self._instance.game.game == 'tm':
+		if self._instance.game.game == 'tm' or self._instance.game.game == 'tmnext':
 			method = 'Trackmania.UI.ResetProperties'
 		else:
 			method = 'Shootmania.UI.ResetProperties'
@@ -66,7 +66,7 @@ class UIProperties:  # pragma: no cover
 			logger.warning('Unable to reset UIProperties: {}'.format(str(e)))
 
 	async def refresh_properties(self):
-		if self._instance.game.game == 'tm':
+		if self._instance.game.game == 'tm' or self._instance.game.game == 'tmnext':
 			method = 'Trackmania.UI.GetProperties'
 		else:
 			method = 'Shootmania.UI.GetProperties'
@@ -154,7 +154,7 @@ class UIProperties:  # pragma: no cover
 			return
 
 		# Decide the method to use.
-		if self._instance.game.game == 'tm':
+		if self._instance.game.game == 'tm' or self._instance.game.game == 'tmnext':
 			method = 'Trackmania.UI.SetProperties'
 		else:
 			method = 'Shootmania.UI.SetProperties'

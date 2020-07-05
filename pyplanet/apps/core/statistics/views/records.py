@@ -36,14 +36,14 @@ class TopSumsView(ManualListView):
 
 	async def get_data(self):
 		data = list()
-		for idx, (player, (first, second, third)) in enumerate(self.topsums):
+		for idx, (player, (first, second, third, _4, _5, _6, _7, _8, _9, _10)) in enumerate(self.topsums):
 			data.append(dict(
 				place=idx+1,
 				player_nickname=player.nickname,
 				first=first,
 				second=second,
 				third=third,
-				total=first + second + third,
+				total=first + second + third + _4 + _5 + _6 + _7 + _8 + _9 + _10,
 			))
 
 		return data
@@ -99,7 +99,7 @@ class TopSumsView(ManualListView):
 				'type': 'label'
 			},
 			{
-				'name': 'total top 3',
+				'name': 'total top 10',
 				'index': 'total',
 				'sorting': True,
 				'searching': False,

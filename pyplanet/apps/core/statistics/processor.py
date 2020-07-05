@@ -63,7 +63,7 @@ class StatisticsProcessor:
 		:return: count or False when not possible to fetch.
 		:rtype: int
 		"""
-		if self.app.instance.game.game == 'tm':
+		if self.app.instance.game.game == 'tm' or self.app.instance.game.game == 'tmnext':
 			return await Score.objects.count(
 				Score.select(Score).where(Score.player == player)
 			)
@@ -78,7 +78,7 @@ class StatisticsProcessor:
 		:return: count or False when not possible to fetch.
 		:rtype: int
 		"""
-		if self.app.instance.game.game == 'tm' and 'local_records' in self.app.instance.apps.apps:
+		if (self.app.instance.game.game == 'tm' or self.app.instance.game.game == 'tmnext') and 'local_records' in self.app.instance.apps.apps:
 			return await LocalRecord.objects.count(
 				LocalRecord.select(LocalRecord).where(LocalRecord.player == player)
 			)
@@ -94,7 +94,7 @@ class StatisticsProcessor:
 		:rtype: int
 		"""
 		# Get the players number of top-3 records (tm only + when local records is active).
-		if self.app.instance.game.game == 'tm' and 'local_records' in self.app.instance.apps.apps:
+		if (self.app.instance.game.game == 'tm' or self.app.instance.game.game == 'tmnext') and 'local_records' in self.app.instance.apps.apps:
 			top = 0
 			records = await LocalRecord.objects.execute(
 				LocalRecord.select(LocalRecord).where(LocalRecord.player == player)
@@ -134,15 +134,15 @@ class StatisticsProcessor:
 					.join(Player)
 					.where(LocalRecord.map_id == map_instance.id)
 					.order_by(LocalRecord.score)
-					.limit(3)
+					.limit(10)
 			)
 			for rank, entry in enumerate(res):
 				if entry.player not in players:
-					players[entry.player] = [0, 0, 0]
+					players[entry.player] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 				players[entry.player][rank] += 1
 
 		topsums = list(players.items())
-		topsums.sort(key=lambda item: item[1][0] + item[1][1] + item[1][2], reverse=True)
+		topsums.sort(key=lambda item: item[1][0] + item[1][1] + item[1][2] + item[1][3] + item[1][4] + item[1][5] + item[1][6] + item[1][7] + item[1][8] + item[1][9], reverse=True)
 
 		self.topsums_cache = topsums[:100]
 		self.topsums_cache_time = datetime.now()
