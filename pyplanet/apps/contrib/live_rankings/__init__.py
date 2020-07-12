@@ -8,7 +8,7 @@ from pyplanet.contrib.setting import Setting
 
 
 class LiveRankings(AppConfig):
-	game_dependencies = ['trackmania']
+	game_dependencies = ['trackmania', 'trackmania_next']
 	app_dependencies = ['core.maniaplanet', 'core.trackmania']
 
 	def __init__(self, *args, **kwargs):
@@ -75,6 +75,8 @@ class LiveRankings(AppConfig):
 
 	def is_mode_supported(self, mode):
 		mode = mode.lower()
+		if self.instance.game.game == 'tmnext' and mode.startswith('trackmania/tm_'):
+			mode = mode[14:]
 		return mode.startswith('timeattack') or mode.startswith('rounds') or mode.startswith('team') or \
 			   mode.startswith('laps') or mode.startswith('cup')
 
