@@ -123,6 +123,10 @@ class Queue(AppConfig):
 		if self.has_password:
 			return
 
+		if not player:
+			# Somehow, player is None here sometimes. TODO: Investigate why.
+			return
+
 		if player.flow.is_spectator and player.flow.has_player_slot:
 			# Release the player slot to the game.
 			try:
